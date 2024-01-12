@@ -16,8 +16,8 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, value):
-        super().__init__(value)
         self.validate_phone()
+        super().__init__(value)
 
     def validate_phone(self):
         if not self.value.isdigit() or len(self.value) != 10:
@@ -33,7 +33,7 @@ class Record:
         try:
             self.phones.append(Phone(phone))
         except ValueError as e:
-            print(e)
+            return e
 
     def remove_phone(self, phone):
         self.phones = [p for p in self.phones if p.value != phone]
@@ -56,8 +56,7 @@ class Record:
         return None
 
     def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {
-            '; '.join(str(p) for p in self.phones)}"
+        return f"Contact name: {self.name.value}, phones: {'; '.join(str(p) for p in self.phones)}"
 
 
 class AddressBook(UserDict):
